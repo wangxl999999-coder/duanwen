@@ -1,0 +1,262 @@
+.login-page {
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(180deg, #1a1a1a 0%, #000000 100%);
+  position: relative;
+}
+
+.custom-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding-top: var(--status-bar-height);
+  height: 88rpx;
+  display: flex;
+  align-items: center;
+  padding-left: 20rpx;
+}
+
+.nav-left {
+  width: 80rpx;
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.back-icon {
+  font-size: 40rpx;
+  color: #ffffff;
+}
+
+.content-wrap {
+  padding-top: calc(var(--status-bar-height) + 88rpx);
+  padding-left: 60rpx;
+  padding-right: 60rpx;
+}
+
+.logo-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 60rpx;
+  padding-bottom: 60rpx;
+}
+
+.app-logo {
+  font-size: 100rpx;
+  margin-bottom: 20rpx;
+}
+
+.app-name {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 16rpx;
+}
+
+.app-slogan {
+  font-size: 26rpx;
+  color: #666666;
+}
+
+.tab-section {
+  display: flex;
+  margin-bottom: 50rpx;
+}
+
+.tab-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 20rpx;
+  border-bottom: 4rpx solid transparent;
+}
+
+.tab-item.active {
+  border-bottom-color: #FF2D55;
+}
+
+.tab-text {
+  font-size: 32rpx;
+  color: #999999;
+}
+
+.tab-item.active .tab-text {
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.form-section {
+  
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  height: 96rpx;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 48rpx;
+  padding-left: 30rpx;
+  padding-right: 30rpx;
+  margin-bottom: 24rpx;
+  position: relative;
+}
+
+.input-icon {
+  font-size: 36rpx;
+  margin-right: 20rpx;
+}
+
+.form-input {
+  flex: 1;
+  height: 100%;
+  font-size: 30rpx;
+  color: #ffffff;
+}
+
+.placeholder {
+  color: #666666;
+}
+
+.code-btn {
+  padding: 12rpx 24rpx;
+  background: linear-gradient(135deg, #FF2D55 0%, #FF6B8A 100%);
+  border-radius: 20rpx;
+}
+
+.code-btn.disabled {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.code-text {
+  font-size: 24rpx;
+  color: #ffffff;
+}
+
+.code-btn.disabled .code-text {
+  color: #999999;
+}
+
+.eye-btn {
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.eye-icon {
+  font-size: 32rpx;
+}
+
+.forget-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 40rpx;
+}
+
+.forget-text {
+  font-size: 26rpx;
+  color: #FF2D55;
+}
+
+.terms-row {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 40rpx;
+}
+
+.checkbox {
+  width: 36rpx;
+  height: 36rpx;
+  border: 2rpx solid #666666;
+  border-radius: 8rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16rpx;
+  flex-shrink: 0;
+  margin-top: 4rpx;
+}
+
+.checkbox.checked {
+  background: linear-gradient(135deg, #FF2D55 0%, #FF6B8A 100%);
+  border-color: transparent;
+}
+
+.check-icon {
+  font-size: 24rpx;
+  color: #ffffff;
+}
+
+.terms-text {
+  font-size: 24rpx;
+  color: #999999;
+  line-height: 1.6;
+}
+
+.terms-link {
+  color: #FF2D55;
+}
+
+.submit-btn {
+  height: 96rpx;
+  background: linear-gradient(135deg, #FF2D55 0%, #FF6B8A 100%);
+  border-radius: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 50rpx;
+}
+
+.submit-text {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.divider-section {
+  display: flex;
+  align-items: center;
+  margin-bottom: 50rpx;
+}
+
+.divider-line {
+  flex: 1;
+  height: 1rpx;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.divider-text {
+  font-size: 24rpx;
+  color: #666666;
+  padding-left: 30rpx;
+  padding-right: 30rpx;
+}
+
+.other-login {
+  display: flex;
+  justify-content: center;
+}
+
+.wx-login-btn {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  padding: 16rpx 40rpx;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 40rpx;
+}
+
+.wx-icon {
+  font-size: 36rpx;
+}
+
+.wx-text {
+  font-size: 28rpx;
+  color: #ffffff;
+}

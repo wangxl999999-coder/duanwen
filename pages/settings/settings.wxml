@@ -1,0 +1,106 @@
+<view class="settings-page">
+  <view class="custom-nav">
+    <view class="nav-left" bindtap="goBack">
+      <text class="back-icon">←</text>
+    </view>
+    <view class="nav-center">
+      <text class="nav-title">设置</text>
+    </view>
+    <view class="nav-blank"></view>
+  </view>
+
+  <scroll-view class="content-scroll" scroll-y="true">
+    <view class="section-group">
+      <view class="section-title">账号</view>
+      <view class="settings-list">
+        <view class="setting-item" bindtap="onTapProfile">
+          <view class="item-left">
+            <text class="item-icon">👤</text>
+            <text class="item-label">编辑资料</text>
+          </view>
+          <view class="item-right">
+            <text class="arrow-icon">›</text>
+          </view>
+        </view>
+        <view class="setting-item" bindtap="onTapAccount">
+          <view class="item-left">
+            <text class="item-icon">🔐</text>
+            <text class="item-label">账号与安全</text>
+          </view>
+          <view class="item-right">
+            <text class="arrow-icon">›</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="section-group">
+      <view class="section-title">通用</view>
+      <view class="settings-list">
+        <view class="setting-item" bindtap="onTapPrivacy">
+          <view class="item-left">
+            <text class="item-icon">🔒</text>
+            <text class="item-label">隐私设置</text>
+          </view>
+          <view class="item-right">
+            <text class="arrow-icon">›</text>
+          </view>
+        </view>
+        <view class="setting-item" bindtap="onTapNotification">
+          <view class="item-left">
+            <text class="item-icon">🔔</text>
+            <text class="item-label">通知设置</text>
+          </view>
+          <view class="item-right">
+            <text class="arrow-icon">›</text>
+          </view>
+        </view>
+        <view class="setting-item" bindtap="onTapClearCache">
+          <view class="item-left">
+            <text class="item-icon">🗑️</text>
+            <text class="item-label">清除缓存</text>
+          </view>
+          <view class="item-right">
+            <text class="arrow-icon">›</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="section-group">
+      <view class="section-title">关于</view>
+      <view class="settings-list">
+        <view class="setting-item" bindtap="onTapAbout">
+          <view class="item-left">
+            <text class="item-icon">ℹ️</text>
+            <text class="item-label">关于我们</text>
+          </view>
+          <view class="item-right">
+            <text class="version-text">v1.0.0</text>
+            <text class="arrow-icon">›</text>
+          </view>
+        </view>
+        <view class="setting-item" bindtap="onTapFeedback">
+          <view class="item-left">
+            <text class="item-icon">💬</text>
+            <text class="item-label">意见反馈</text>
+          </view>
+          <view class="item-right">
+            <text class="arrow-icon">›</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="logout-section" wx:if="{{isLoggedIn}}">
+      <view class="logout-btn" bindtap="onTapLogout">
+        <text class="logout-text">退出登录</text>
+      </view>
+    </view>
+
+    <view class="footer">
+      <text class="footer-text">短文 v1.0.0</text>
+      <text class="footer-text">© 2024 短文团队</text>
+    </view>
+  </scroll-view>
+</view>
