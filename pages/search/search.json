@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "article-card": "/components/article-card/index",
+    "user-card": "/components/user-card/index",
+    "loading": "/components/loading/index"
+  },
+  "navigationStyle": "custom"
+}

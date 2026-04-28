@@ -1,0 +1,64 @@
+<view class="search-page">
+  <view class="custom-nav">
+    <view class="search-bar">
+      <text class="search-icon">🔍</text>
+      <input class="search-input" type="text" value="{{keyword}}" placeholder="搜索短文、用户" maxlength="50" bindinput="onKeywordInput" placeholder-class="placeholder" confirm-type="search" bindconfirm="onSearch"></input>
+      <view class="search-btn" bindtap="onSearch">
+        <text class="search-text">搜索</text>
+      </view>
+    </view>
+  </view>
+
+  <scroll-view class="content-scroll" scroll-y="true" bindscrolltolower="onScrollLower">
+    <view class="category-section" wx:if="{{!keyword}}">
+      <view class="section-header">
+        <text class="section-title">热门分类</text>
+      </view>
+      <scroll-view class="category-list" scroll-x="true">
+        <view class="category-item {{selectedCategory === 0 ? 'active' : ''}}" bindtap="selectCategory" data-id="0">
+          <text class="category-icon">🔥</text>
+          <text class="category-name">全部</text>
+        </view>
+        <view class="category-item {{selectedCategory === item.id ? 'active' : ''}}" wx:for="{{categories}}" wx:key="id" bindtap="selectCategory" data-id="{{item.id}}">
+          <text class="category-icon">{{item.icon}}</text>
+          <text class="category-name">{{item.name}}</text>
+        </view>
+      </scroll-view>
+    </view>
+
+    <view class="hot-users-section" wx:if="{{!keyword && hotUsers.length > 0}}">
+      <view class="section-header">
+        <text class="section-title">热门作者</text>
+      </view>
+      <view class="users-list">
+        <user-card wx:for="{{hotUsers}}" wx:key="id" user="{{item}}" showFollow="{{true}}" isFollowed="{{false}}"></user-card>
+      </view>
+    </view>
+
+    <view class="articles-section">
+      <view class="section-header">
+        <text class="section-title">{{keyword ? '搜索结果' : '推荐短文'}}</text>
+      </view>
+      
+      <view class="articles-list" wx:if="{{articles.length > 0}}">
+        <article-card wx:for="{{articles}}" wx:key="id" article="{{item}}" showAuthor="{{true}}" bind:like="onArticleLike" bind:share="onArticleShare"></article-card>
+      </view>
+
+      <view class="empty-wrapper" wx:if="{{!loading && articles.length === 0}}">
+        <view class="empty-content">
+          <text class="empty-icon">🔍</text>
+          <text class="empty-text">暂无相关内容</text>
+          <text class="empty-subtext">试试其他关键词吧</text>
+        </view>
+      </view>
+
+      <view class="loading-wrapper" wx:if="{{loading}}">
+        <loading text="加载中..."></loading>
+      </view>
+
+      <view class="no-more" wx:if="{{!loading && !hasMore && articles.length > 0}}">
+        <text class="no-more-text">没有更多了</text>
+      </view>
+    </view>
+  </scroll-view>
+</view>

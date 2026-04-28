@@ -1,0 +1,127 @@
+<view class="publish-page">
+  <view class="custom-nav">
+    <view class="nav-left" bindtap="goBack">
+      <text class="back-icon">←</text>
+    </view>
+    <view class="nav-center">
+      <text class="nav-title">发布短文</text>
+    </view>
+    <view class="nav-right">
+      <view class="publish-btn {{(title && content && selectedCategory) ? 'active' : ''}}" bindtap="submitArticle">
+        <text class="publish-text">发布</text>
+      </view>
+    </view>
+  </view>
+
+  <scroll-view class="content-scroll" scroll-y="true">
+    <view class="form-section">
+      <view class="input-group">
+        <input class="title-input" type="text" value="{{title}}" placeholder="请输入文章标题（2-50字）" maxlength="50" bindinput="onTitleInput" placeholder-class="placeholder"></input>
+        <text class="word-count">{{title.length}}/50</text>
+      </view>
+
+      <view class="input-group content-group">
+        <textarea class="content-textarea" value="{{content}}" placeholder="请输入文章内容（至少10字）" maxlength="2000" bindinput="onContentInput" placeholder-class="placeholder" auto-height></textarea>
+        <text class="word-count">{{content.length}}/2000</text>
+      </view>
+
+      <view class="images-section">
+        <view class="section-header">
+          <text class="section-title">添加图片</text>
+          <text class="section-tips">{{images.length}}/9</text>
+        </view>
+        <view class="images-grid">
+          <view class="image-item" wx:for="{{images}}" wx:key="index">
+            <image class="preview-img" src="{{item}}" mode="aspectFill" bindtap="previewImage" data-index="{{index}}"></image>
+            <view class="delete-btn" bindtap="deleteImage" data-index="{{index}}">
+              <text class="delete-icon">×</text>
+            </view>
+          </view>
+          <view class="add-image" wx:if="{{images.length < 9}}" bindtap="chooseImages">
+            <text class="add-icon">+</text>
+            <text class="add-text">添加图片</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="settings-section">
+      <view class="setting-item" bindtap="toggleCategoryPanel">
+        <text class="setting-label">文章分类</text>
+        <view class="setting-value">
+          <text class="value-text {{selectedCategory ? 'active' : ''}}">{{selectedCategory ? selectedCategory.name : '请选择'}}</text>
+          <text class="arrow-icon">›</text>
+        </view>
+      </view>
+
+      <view class="setting-item" bindtap="toggleMusicPanel">
+        <text class="setting-label">背景音乐</text>
+        <view class="setting-value">
+          <text class="value-text {{selectedMusic ? 'active' : ''}}">{{selectedMusic ? selectedMusic.name : '可选'}}</text>
+          <text class="arrow-icon">›</text>
+        </view>
+      </view>
+
+      <view class="setting-item public-setting">
+        <text class="setting-label">公开可见</text>
+        <view class="switch-btn {{isPublic ? 'active' : ''}}" bindtap="togglePublic">
+          <view class="switch-circle"></view>
+        </view>
+      </view>
+    </view>
+
+    <view class="tips-section">
+      <text class="tips-title">发布提示</text>
+      <text class="tips-item">• 请确保内容原创，尊重他人知识产权</text>
+      <text class="tips-item">• 禁止发布违法违规、低俗色情内容</text>
+      <text class="tips-item">• 优质内容有机会获得更多推荐</text>
+    </view>
+  </scroll-view>
+
+  <view class="category-panel" wx:if="{{showCategoryPanel}}" catchtouchmove="preventMove">
+    <view class="panel-mask" bindtap="hidePanels"></view>
+    <view class="panel-content">
+      <view class="panel-header">
+        <text class="panel-title">选择分类</text>
+        <view class="close-btn" bindtap="hidePanels">
+          <text class="close-icon">✕</text>
+        </view>
+      </view>
+      <scroll-view class="category-list" scroll-y="true">
+        <view class="category-item {{selectedCategory && selectedCategory.id === item.id ? 'active' : ''}}" wx:for="{{categories}}" wx:key="id" bindtap="selectCategory" data-category="{{item}}">
+          <text class="category-icon">{{item.icon}}</text>
+          <text class="category-name">{{item.name}}</text>
+          <view class="check-icon" wx:if="{{selectedCategory && selectedCategory.id === item.id}}">✓</view>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+
+  <view class="music-panel" wx:if="{{showMusicPanel}}" catchtouchmove="preventMove">
+    <view class="panel-mask" bindtap="hidePanels"></view>
+    <view class="panel-content">
+      <view class="panel-header">
+        <text class="panel-title">选择背景音乐</text>
+        <view class="close-btn" bindtap="hidePanels">
+          <text class="close-icon">✕</text>
+        </view>
+      </view>
+      <scroll-view class="music-list" scroll-y="true">
+        <view class="music-item {{selectedMusic && selectedMusic.id === item.id ? 'active' : ''}}" wx:for="{{musicList}}" wx:key="id">
+          <view class="music-info">
+            <view class="play-btn" bindtap="toggleMusicPlay" data-music="{{item}}">
+              <text class="play-icon">{{isPlaying && playingMusicId === item.id ? '⏸️' : '▶️'}}</text>
+            </view>
+            <view class="music-detail">
+              <text class="music-name">{{item.name}}</text>
+              <text class="music-duration">{{item.duration}}</text>
+            </view>
+          </view>
+          <view class="select-btn" bindtap="selectMusic" data-music="{{item}}">
+            <text class="select-text">{{selectedMusic && selectedMusic.id === item.id ? '已选' : '选择'}}</text>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+</view>

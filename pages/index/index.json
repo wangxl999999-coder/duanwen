@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "article-card": "/components/article-card/index",
+    "loading": "/components/loading/index",
+    "empty": "/components/empty/index"
+  },
+  "navigationStyle": "custom",
+  "enablePullDownRefresh": true
+}

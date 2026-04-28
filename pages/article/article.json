@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "comment-item": "/components/comment-item/index",
+    "loading": "/components/loading/index"
+  },
+  "navigationStyle": "custom"
+}

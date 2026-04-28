@@ -1,0 +1,110 @@
+<view class="index-page">
+  <view class="custom-nav">
+    <view class="nav-left">
+      <text class="nav-title">短文</text>
+    </view>
+    <view class="nav-right">
+      <view class="category-btn" bindtap="toggleCategoryPanel">
+        <text class="category-text">{{categories[selectedCategory] ? categories[selectedCategory].name : '推荐'}}</text>
+        <text class="arrow-icon">▼</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="category-panel" wx:if="{{showCategoryPanel}}" catchtouchmove="preventMove">
+    <view class="panel-mask" bindtap="toggleCategoryPanel"></view>
+    <view class="panel-content">
+      <view class="category-item {{selectedCategory === 0 ? 'active' : ''}}" bindtap="selectCategory" data-id="0">
+        <text class="category-icon">🔥</text>
+        <text class="category-name">推荐</text>
+      </view>
+      <view class="category-item {{selectedCategory === item.id ? 'active' : ''}}" wx:for="{{categories}}" wx:key="id" bindtap="selectCategory" data-id="{{item.id}}">
+        <text class="category-icon">{{item.icon}}</text>
+        <text class="category-name">{{item.name}}</text>
+      </view>
+    </view>
+  </view>
+
+  <swiper class="article-swiper" wx:if="{{articles.length > 0}}" vertical="true" current="{{currentIndex}}" bindchange="onSwiperChange" circular="false" duration="300">
+    <swiper-item class="swiper-item" wx:for="{{articles}}" wx:key="id">
+      <view class="article-item">
+        <view class="article-background"></view>
+        
+        <view class="article-info">
+          <view class="author-row" bindtap="onTapAuthor" data-index="{{index}}">
+            <image class="author-avatar" src="{{item.author.avatar}}" mode="aspectFill"></image>
+            <text class="author-name">{{item.author.nickname}}</text>
+            <view class="follow-btn {{followedUsers[item.author.id] ? 'followed' : ''}}" catchtap="onTapFollow" data-index="{{index}}">
+              <text class="follow-text">{{followedUsers[item.author.id] ? '已关注' : '+ 关注'}}</text>
+            </view>
+          </view>
+          
+          <view class="article-title">{{item.title}}</view>
+          
+          <view class="article-content">
+            <view class="images-preview" wx:if="{{item.images.length > 0}}">
+              <image class="preview-image" wx:for="{{item.images}}" wx:key="index" src="{{item}}" mode="aspectFill"></image>
+            </view>
+            <text class="article-text">{{item.content}}</text>
+          </view>
+          
+          <view class="music-row" wx:if="{{item.musicName}}" bindtap="toggleMusic">
+            <view class="music-icon {{isPlaying ? 'playing' : ''}}">🎵</view>
+            <view class="music-info">
+              <text class="music-name">{{item.musicName}}</text>
+            </view>
+            <view class="music-control">
+              <text class="control-text">{{isPlaying ? '暂停' : '播放'}}</text>
+            </view>
+          </view>
+        </view>
+        
+        <view class="action-sidebar">
+          <view class="action-item" catchtap="onTapFollow" data-index="{{index}}">
+            <view class="action-avatar">
+              <image class="avatar-img" src="{{item.author.avatar}}" mode="aspectFill"></image>
+              <view class="follow-badge {{followedUsers[item.author.id] ? 'hidden' : ''}}">+</view>
+            </view>
+            <text class="action-label">作者</text>
+          </view>
+          
+          <view class="action-item" catchtap="onTapLike" data-index="{{index}}">
+            <view class="action-icon {{likedArticles[item.id] ? 'liked' : ''}}">
+              <text class="icon-text">{{likedArticles[item.id] ? '❤️' : '🤍'}}</text>
+            </view>
+            <text class="action-label">{{item.likeCount}}</text>
+          </view>
+          
+          <view class="action-item" catchtap="onTapCollect" data-index="{{index}}">
+            <view class="action-icon {{collectedArticles[item.id] ? 'collected' : ''}}">
+              <text class="icon-text">{{collectedArticles[item.id] ? '⭐' : '☆'}}</text>
+            </view>
+            <text class="action-label">{{item.collectCount}}</text>
+          </view>
+          
+          <view class="action-item" catchtap="onTapComment" data-index="{{index}}">
+            <view class="action-icon">
+              <text class="icon-text">💬</text>
+            </view>
+            <text class="action-label">{{item.commentCount}}</text>
+          </view>
+          
+          <view class="action-item" catchtap="onTapShare" data-index="{{index}}">
+            <view class="action-icon">
+              <text class="icon-text">↗️</text>
+            </view>
+            <text class="action-label">分享</text>
+          </view>
+        </view>
+      </view>
+    </swiper-item>
+  </swiper>
+
+  <view class="loading-container" wx:if="{{loading && articles.length === 0}}">
+    <loading text="加载中..."></loading>
+  </view>
+
+  <view class="empty-container" wx:if="{{!loading && articles.length === 0}}">
+    <empty icon="📖" text="暂无短文" subText="快来发布第一篇短文吧" showButton="{{true}}" buttonText="去发布" bind:buttonTap="goToPublish"></empty>
+  </view>
+</view>

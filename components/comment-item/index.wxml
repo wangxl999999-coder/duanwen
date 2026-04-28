@@ -1,0 +1,29 @@
+<view class="comment-item">
+  <view class="comment-main">
+    <image class="comment-avatar" src="{{comment.user.avatar}}" mode="aspectFill" bindtap="onTapUser"></image>
+    <view class="comment-content">
+      <view class="comment-header">
+        <text class="comment-user" bindtap="onTapUser">{{comment.user.nickname}}</text>
+        <text class="comment-time">{{comment.createTime}}</text>
+      </view>
+      <text class="comment-text">{{comment.content}}</text>
+      <view class="comment-actions">
+        <view class="action-btn {{isLiked ? 'liked' : ''}}" bindtap="onTapLike">
+          <text class="action-icon">{{isLiked ? '❤️' : '🤍'}}</text>
+          <text class="action-text">{{likeCount}}</text>
+        </view>
+        <view class="action-btn" bindtap="onTapReply">
+          <text class="action-icon">💬</text>
+          <text class="action-text">回复</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  
+  <view class="reply-list" wx:if="{{comment.replies && comment.replies.length > 0}}">
+    <view class="reply-item" wx:for="{{comment.replies}}" wx:key="id">
+      <text class="reply-user">{{item.user.nickname}}</text>
+      <text class="reply-content">: {{item.content}}</text>
+    </view>
+  </view>
+</view>

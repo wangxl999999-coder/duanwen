@@ -1,0 +1,93 @@
+<view class="login-page">
+  <view class="custom-nav">
+    <view class="nav-left" bindtap="goBack">
+      <text class="back-icon">←</text>
+    </view>
+  </view>
+
+  <view class="content-wrap">
+    <view class="logo-section">
+      <view class="app-logo">📖</view>
+      <text class="app-name">短文</text>
+      <text class="app-slogan">发现生活中的美好文字</text>
+    </view>
+
+    <view class="tab-section">
+      <view class="tab-item {{mode === 'login' ? 'active' : ''}}" bindtap="switchMode" data-mode="login">
+        <text class="tab-text">登录</text>
+      </view>
+      <view class="tab-item {{mode === 'register' ? 'active' : ''}}" bindtap="switchMode" data-mode="register">
+        <text class="tab-text">注册</text>
+      </view>
+    </view>
+
+    <view class="form-section">
+      <view class="input-group">
+        <view class="input-icon">📱</view>
+        <input class="form-input" type="number" value="{{phone}}" placeholder="请输入手机号" maxlength="11" bindinput="onPhoneInput" placeholder-class="placeholder"></input>
+      </view>
+
+      <view class="input-group" wx:if="{{mode === 'register'}}">
+        <view class="input-icon">🔒</view>
+        <input class="form-input" type="number" value="{{code}}" placeholder="请输入验证码" maxlength="6" bindinput="onCodeInput" placeholder-class="placeholder"></input>
+        <view class="code-btn {{codeCountdown > 0 ? 'disabled' : ''}}" bindtap="sendCode">
+          <text class="code-text">{{codeText}}</text>
+        </view>
+      </view>
+
+      <view class="input-group" wx:if="{{mode === 'register'}}">
+        <view class="input-icon">👤</view>
+        <input class="form-input" type="text" value="{{nickname}}" placeholder="请输入昵称" maxlength="20" bindinput="onNicknameInput" placeholder-class="placeholder"></input>
+      </view>
+
+      <view class="input-group">
+        <view class="input-icon">🔐</view>
+        <input class="form-input" type="{{passwordVisible ? 'text' : 'password'}}" value="{{password}}" placeholder="请输入密码" maxlength="20" bindinput="onPasswordInput" placeholder-class="placeholder"></input>
+        <view class="eye-btn" bindtap="togglePasswordVisible">
+          <text class="eye-icon">{{passwordVisible ? '👁️' : '👁️‍🗨️'}}</text>
+        </view>
+      </view>
+
+      <view class="input-group" wx:if="{{mode === 'register'}}">
+        <view class="input-icon">🔐</view>
+        <input class="form-input" type="{{confirmPasswordVisible ? 'text' : 'password'}}" value="{{confirmPassword}}" placeholder="请再次输入密码" maxlength="20" bindinput="onConfirmPasswordInput" placeholder-class="placeholder"></input>
+        <view class="eye-btn" bindtap="toggleConfirmPasswordVisible">
+          <text class="eye-icon">{{confirmPasswordVisible ? '👁️' : '👁️‍🗨️'}}</text>
+        </view>
+      </view>
+
+      <view class="forget-row" wx:if="{{mode === 'login'}}">
+        <text class="forget-text">忘记密码？</text>
+      </view>
+
+      <view class="terms-row" wx:if="{{mode === 'register'}}">
+        <view class="checkbox {{agreeTerms ? 'checked' : ''}}" bindtap="toggleTerms">
+          <text class="check-icon" wx:if="{{agreeTerms}}">✓</text>
+        </view>
+        <text class="terms-text">
+          我已阅读并同意
+          <text class="terms-link" bindtap="openTerms">《用户协议》</text>
+          和
+          <text class="terms-link" bindtap="openPrivacy">《隐私政策》</text>
+        </text>
+      </view>
+
+      <view class="submit-btn" bindtap="submitLogin">
+        <text class="submit-text">{{mode === 'login' ? '登录' : '注册'}}</text>
+      </view>
+
+      <view class="divider-section">
+        <view class="divider-line"></view>
+        <text class="divider-text">其他登录方式</text>
+        <view class="divider-line"></view>
+      </view>
+
+      <view class="other-login">
+        <view class="wx-login-btn" bindtap="wxLogin">
+          <text class="wx-icon">💬</text>
+          <text class="wx-text">微信登录</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

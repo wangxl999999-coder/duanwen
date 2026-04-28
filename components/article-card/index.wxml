@@ -1,0 +1,42 @@
+<view class="article-card" bindtap="onTapCard">
+  <view class="article-content">
+    <view class="article-header" wx:if="{{showAuthor}}">
+      <image class="author-avatar" src="{{article.author.avatar}}" mode="aspectFill" bindtap="onTapAuthor"></image>
+      <view class="author-info" bindtap="onTapAuthor">
+        <text class="author-name">{{article.author.nickname}}</text>
+        <text class="publish-time">{{article.createTime}}</text>
+      </view>
+      <text class="category-tag">{{article.categoryName}}</text>
+    </view>
+    
+    <view class="article-title">{{article.title}}</view>
+    
+    <view class="article-images" wx:if="{{article.images.length > 0}}">
+      <view class="image-item" wx:for="{{article.images}}" wx:key="index">
+        <image src="{{item}}" mode="aspectFill" class="article-image"></image>
+      </view>
+    </view>
+    
+    <view class="article-desc">{{article.content}}</view>
+    
+    <view class="article-music" wx:if="{{article.musicName}}">
+      <view class="music-icon">🎵</view>
+      <text class="music-name">{{article.musicName}}</text>
+    </view>
+  </view>
+  
+  <view class="article-actions">
+    <view class="action-item" bindtap="onTapComment">
+      <view class="action-icon">💬</view>
+      <text class="action-text">{{article.commentCount}}</text>
+    </view>
+    <view class="action-item {{likeStatus ? 'liked' : ''}}" bindtap="onTapLike">
+      <view class="action-icon">{{likeStatus ? '❤️' : '🤍'}}</view>
+      <text class="action-text">{{article.likeCount}}</text>
+    </view>
+    <view class="action-item" bindtap="onTapShare">
+      <view class="action-icon">↗️</view>
+      <text class="action-text">分享</text>
+    </view>
+  </view>
+</view>

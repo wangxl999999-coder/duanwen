@@ -1,0 +1,52 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/article/article",
+    "pages/publish/publish",
+    "pages/login/login",
+    "pages/profile/profile",
+    "pages/search/search",
+    "pages/settings/settings"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#000000",
+    "navigationBarTitleText": "短文",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#000000"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#FFFFFF",
+    "backgroundColor": "#000000",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "assets/icons/home.png",
+        "selectedIconPath": "assets/icons/home-active.png"
+      },
+      {
+        "pagePath": "pages/search/search",
+        "text": "发现",
+        "iconPath": "assets/icons/search.png",
+        "selectedIconPath": "assets/icons/search-active.png"
+      },
+      {
+        "pagePath": "pages/publish/publish",
+        "text": "发布",
+        "iconPath": "assets/icons/publish.png",
+        "selectedIconPath": "assets/icons/publish-active.png"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的",
+        "iconPath": "assets/icons/profile.png",
+        "selectedIconPath": "assets/icons/profile-active.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

@@ -1,0 +1,14 @@
+<view class="user-card" bindtap="onTapCard">
+  <image class="user-avatar" src="{{user.avatar}}" mode="aspectFill"></image>
+  <view class="user-info">
+    <text class="user-name">{{user.nickname}}</text>
+    <view class="user-stats" wx:if="{{user.fansCount !== undefined}}">
+      <text class="stat-item">{{user.fansCount}} 粉丝</text>
+      <text class="stat-item">{{user.likesCount}} 获赞</text>
+    </view>
+    <text class="user-bio" wx:if="{{user.bio}}">{{user.bio}}</text>
+  </view>
+  <view class="follow-btn" wx:if="{{showFollow}}" bindtap="onTapFollow">
+    <text class="follow-text">{{isFollowed ? '已关注' : '+ 关注'}}</text>
+  </view>
+</view>

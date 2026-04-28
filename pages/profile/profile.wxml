@@ -1,0 +1,134 @@
+<view class="profile-page">
+  <view class="custom-nav">
+    <view class="nav-blank" wx:if="{{isSelf}}"></view>
+    <view class="nav-left" wx:if="{{!isSelf}}" bindtap="goBack">
+      <text class="back-icon">←</text>
+    </view>
+    <view class="nav-center">
+      <text class="nav-title" wx:if="{{!isLoggedIn && isSelf}}">我的</text>
+      <text class="nav-title" wx:elif="{{userInfo}}">{{userInfo.nickname}}</text>
+    </view>
+    <view class="nav-right" wx:if="{{isSelf && isLoggedIn}}" bindtap="onTapSettings">
+      <text class="settings-icon">⚙️</text>
+    </view>
+    <view class="nav-blank" wx:if="{{!isSelf}}"></view>
+  </view>
+
+  <scroll-view class="content-scroll" scroll-y="true" bindscrolltolower="onScrollLower">
+    <view class="not-logged-in" wx:if="{{!isLoggedIn && isSelf}}">
+      <view class="login-prompt" bindtap="onTapLogin">
+        <view class="avatar-placeholder">
+          <text class="placeholder-icon">👤</text>
+        </view>
+        <view class="login-text">
+          <text class="login-title">点击登录</text>
+          <text class="login-desc">登录后体验完整功能</text>
+        </view>
+        <text class="arrow-icon">›</text>
+      </view>
+    </view>
+
+    <view class="user-info-section" wx:if="{{userInfo}}">
+      <view class="user-header">
+        <image class="user-avatar" src="{{userInfo.avatar}}" mode="aspectFill"></image>
+        <view class="user-detail">
+          <view class="name-row">
+            <text class="user-name">{{userInfo.nickname}}</text>
+            <view class="gender-badge" wx:if="{{userInfo.gender === 1}}">
+              <text class="gender-icon">♂</text>
+            </view>
+            <view class="gender-badge female" wx:elif="{{userInfo.gender === 2}}">
+              <text class="gender-icon">♀</text>
+            </view>
+          </view>
+          <text class="username" wx:if="{{userInfo.username}}">@{{userInfo.username}}</text>
+        </view>
+        <view class="action-group" wx:if="{{!isSelf}}">
+          <view class="follow-btn {{isFollowed ? 'followed' : ''}}" bindtap="onTapFollow">
+            <text class="follow-text">{{isFollowed ? '已关注' : '+ 关注'}}</text>
+          </view>
+        </view>
+        <view class="action-group" wx:else>
+          <view class="edit-btn" bindtap="onTapEdit">
+            <text class="edit-text">编辑资料</text>
+          </view>
+          <view class="logout-btn" bindtap="onTapLogout">
+            <text class="logout-text">退出</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="user-bio" wx:if="{{userInfo.bio}}">
+        <text class="bio-text">{{userInfo.bio}}</text>
+      </view>
+
+      <view class="user-meta" wx:if="{{userInfo.region || userInfo.age}}">
+        <view class="meta-item" wx:if="{{userInfo.region}}">
+          <text class="meta-icon">📍</text>
+          <text class="meta-text">{{userInfo.region}}</text>
+        </view>
+        <view class="meta-item" wx:if="{{userInfo.age}}">
+          <text class="meta-icon">🎂</text>
+          <text class="meta-text">{{userInfo.age}}岁</text>
+        </view>
+      </view>
+
+      <view class="stats-row">
+        <view class="stat-item" bindtap="onTapFollowList">
+          <text class="stat-value">{{userInfo.followCount || 0}}</text>
+          <text class="stat-label">关注</text>
+        </view>
+        <view class="stat-divider"></view>
+        <view class="stat-item" bindtap="onTapFansList">
+          <text class="stat-value">{{userInfo.fansCount || 0}}</text>
+          <text class="stat-label">粉丝</text>
+        </view>
+        <view class="stat-divider"></view>
+        <view class="stat-item">
+          <text class="stat-value">{{userInfo.likesCount || 0}}</text>
+          <text class="stat-label">获赞</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="articles-section" wx:if="{{isLoggedIn || !isSelf}}">
+      <view class="tabs-row">
+        <view class="tab-item {{activeTab === item.id ? 'active' : ''}}" wx:for="{{tabs}}" wx:key="id" bindtap="switchTab" data-id="{{item.id}}">
+          <text class="tab-text">{{item.name}}</text>
+          <view class="tab-indicator" wx:if="{{activeTab === item.id}}"></view>
+        </view>
+      </view>
+
+      <view class="articles-list" wx:if="{{articles.length > 0}}">
+        <view class="article-item" wx:for="{{articles}}" wx:key="id" bindtap="onTapArticle" data-article="{{item}}">
+          <view class="article-cover" wx:if="{{item.images.length > 0}}">
+            <image class="cover-img" src="{{item.images[0]}}" mode="aspectFill"></image>
+          </view>
+          <view class="article-cover placeholder" wx:else>
+            <text class="placeholder-text">📖</text>
+          </view>
+          <view class="article-info">
+            <text class="article-title">{{item.title}}</text>
+            <view class="article-meta">
+              <text class="meta-item">{{item.author.nickname}}</text>
+              <text class="meta-item">{{item.viewCount}} 浏览</text>
+              <text class="meta-item">{{item.categoryName}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view class="empty-wrapper" wx:if="{{!loading && articles.length === 0}}">
+        <empty icon="📝" text="暂无内容" subText="{{tabs[activeTab].type === 'public' ? '快去发布第一篇短文吧' : '还没有任何内容'}}"></empty>
+      </view>
+
+      <view class="loading-wrapper" wx:if="{{loading}}">
+        <loading text="加载中..."></loading>
+      </view>
+
+      <view class="no-more" wx:if="{{!loading && !hasMore && articles.length > 0}}">
+        <text class="no-more-text">没有更多了</text>
+      </view>
+    </view>
+  </scroll-view>
+</view>
