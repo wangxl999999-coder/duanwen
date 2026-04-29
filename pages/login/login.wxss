@@ -181,7 +181,7 @@
   justify-content: center;
   margin-right: 16rpx;
   flex-shrink: 0;
-  margin-top: 2rpx;
+  margin-top: 4rpx;
 }
 
 .checkbox.checked {
@@ -194,13 +194,20 @@
   color: #ffffff;
 }
 
+.terms-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.terms-text-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  line-height: 1.8;
+}
+
 .terms-text {
   font-size: 26rpx;
   color: #999999;
-  line-height: 1.8;
-  flex: 1;
-  display: flex;
-  flex-wrap: wrap;
 }
 
 .terms-link {

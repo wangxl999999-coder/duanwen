@@ -52,7 +52,9 @@
 
 .content-scroll {
   padding-top: calc(var(--status-bar-height) + 88rpx);
+  padding-bottom: 120rpx;
   min-height: 100vh;
+  box-sizing: border-box;
 }
 
 .not-logged-in {
@@ -118,15 +120,17 @@
 }
 
 .user-avatar {
-  width: 120rpx;
-  height: 120rpx;
+  width: 140rpx;
+  height: 140rpx;
   border-radius: 50%;
   margin-right: 24rpx;
   border: 4rpx solid rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
 }
 
 .user-detail {
   flex: 1;
+  min-width: 0;
   padding-top: 8rpx;
 }
 
@@ -135,12 +139,17 @@
   align-items: center;
   gap: 12rpx;
   margin-bottom: 8rpx;
+  flex-wrap: wrap;
 }
 
 .user-name {
   font-size: 36rpx;
   font-weight: bold;
   color: #ffffff;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 300rpx;
 }
 
 .gender-badge {
