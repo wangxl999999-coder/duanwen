@@ -162,7 +162,7 @@ Page({
         return
       }
       
-      if (!nickname.trim()) {
+      if (!this.data.nickname.trim()) {
         util.showToast('请输入昵称', 'none')
         return
       }

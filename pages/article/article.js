@@ -289,7 +289,20 @@ Page({
   },
 
   goBack: function () {
-    wx.navigateBack()
+    const pages = getCurrentPages()
+    if (pages.length > 1) {
+      wx.navigateBack({
+        fail: () => {
+          wx.switchTab({
+            url: '/pages/index/index'
+          })
+        }
+      })
+    } else {
+      wx.switchTab({
+        url: '/pages/index/index'
+      })
+    }
   },
 
   onShareAppMessage: function () {

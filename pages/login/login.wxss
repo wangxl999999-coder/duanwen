@@ -168,11 +168,12 @@
   display: flex;
   align-items: flex-start;
   margin-bottom: 40rpx;
+  padding: 10rpx 0;
 }
 
 .checkbox {
-  width: 36rpx;
-  height: 36rpx;
+  width: 40rpx;
+  height: 40rpx;
   border: 2rpx solid #666666;
   border-radius: 8rpx;
   display: flex;
@@ -180,7 +181,7 @@
   justify-content: center;
   margin-right: 16rpx;
   flex-shrink: 0;
-  margin-top: 4rpx;
+  margin-top: 2rpx;
 }
 
 .checkbox.checked {
@@ -194,13 +195,17 @@
 }
 
 .terms-text {
-  font-size: 24rpx;
+  font-size: 26rpx;
   color: #999999;
-  line-height: 1.6;
+  line-height: 1.8;
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .terms-link {
   color: #FF2D55;
+  font-size: 26rpx;
 }
 
 .submit-btn {

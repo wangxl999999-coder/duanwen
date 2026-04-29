@@ -31,7 +31,7 @@
         <text class="section-title">热门作者</text>
       </view>
       <view class="users-list">
-        <user-card wx:for="{{hotUsers}}" wx:key="id" user="{{item}}" showFollow="{{true}}" isFollowed="{{false}}"></user-card>
+        <user-card wx:for="{{hotUsers}}" wx:key="id" user="{{item}}" showFollow="{{true}}" isFollowed="{{item.isFollowed || false}}" bind:follow="onFollowUser"></user-card>
       </view>
     </view>
 
