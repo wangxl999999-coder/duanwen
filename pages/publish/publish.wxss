@@ -57,12 +57,14 @@
 
 .publish-btn {
   padding: 12rpx 28rpx;
-  background-color: rgba(255, 45, 85, 0.3);
+  background-color: #333333;
   border-radius: 30rpx;
+  opacity: 0.5;
 }
 
 .publish-btn.active {
   background: linear-gradient(135deg, #FF2D55 0%, #FF6B8A 100%);
+  opacity: 1;
 }
 
 .publish-text {

@@ -13,7 +13,8 @@ Page({
     loading: true,
     page: 1,
     pageSize: 10,
-    hasMore: true
+    hasMore: true,
+    followedUsers: {}
   },
 
   onLoad: function () {
@@ -155,5 +156,29 @@ Page({
         page: this.data.page + 1
       })
     }, 300)
+  },
+
+  onFollowUser: function (e) {
+    const { userId, isFollowed } = e.detail
+    const appInstance = getApp()
+    
+    if (!appInstance.globalData.isLoggedIn) {
+      appInstance.showLoginModal()
+      return
+    }
+    
+    const updatedHotUsers = this.data.hotUsers.map(user => {
+      if (user.id === userId) {
+        return { ...user, isFollowed: isFollowed }
+      }
+      return user
+    })
+    
+    this.setData({
+      hotUsers: updatedHotUsers,
+      [`followedUsers.${userId}`]: isFollowed
+    })
+    
+    util.showToast(isFollowed ? '关注成功' : '已取消关注', 'success')
   }
 })
