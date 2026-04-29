@@ -64,12 +64,14 @@
         <view class="checkbox {{agreeTerms ? 'checked' : ''}}" bindtap="toggleTerms">
           <text class="check-icon" wx:if="{{agreeTerms}}">✓</text>
         </view>
-        <text class="terms-text">
-          我已阅读并同意
-          <text class="terms-link" bindtap="openTerms">《用户协议》</text>
-          和
-          <text class="terms-link" bindtap="openPrivacy">《隐私政策》</text>
-        </text>
+        <view class="terms-content">
+          <view class="terms-text-wrap">
+            <text class="terms-text">我已阅读并同意</text>
+            <text class="terms-link" catchtap="openTerms">《用户协议》</text>
+            <text class="terms-text">和</text>
+            <text class="terms-link" catchtap="openPrivacy">《隐私政策》</text>
+          </view>
+        </view>
       </view>
 
       <view class="submit-btn" bindtap="submitLogin">

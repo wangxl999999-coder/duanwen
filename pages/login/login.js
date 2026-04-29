@@ -1,5 +1,8 @@
 const app = getApp()
 const util = require('../../utils/util.js')
+const store = require('../../utils/store.js')
+
+const STORAGE_KEY_REGISTERED_USERS = 'registered_users'
 
 Page({
   data: {
@@ -123,36 +126,58 @@ Page({
     }, 1000)
   },
 
+  getRegisteredUsers: function () {
+    return store.get(STORAGE_KEY_REGISTERED_USERS, {})
+  },
+
+  saveRegisteredUser: function (user) {
+    const users = this.getRegisteredUsers()
+    users[user.phone] = {
+      ...user,
+      password: this.data.password,
+      createdAt: Date.now()
+    }
+    store.set(STORAGE_KEY_REGISTERED_USERS, users)
+    return true
+  },
+
+  findUserByPhone: function (phone) {
+    const users = this.getRegisteredUsers()
+    return users[phone] || null
+  },
+
   submitLogin: function () {
     const { phone, password, code, mode, agreeTerms } = this.data
+    const phoneTrim = phone.trim()
+    const passwordTrim = password.trim()
     
     if (mode === 'login') {
-      if (!phone.trim()) {
+      if (!phoneTrim) {
         util.showToast('请输入手机号', 'none')
         return
       }
       
-      if (!/^1[3-9]\d{9}$/.test(phone.trim())) {
+      if (!/^1[3-9]\d{9}$/.test(phoneTrim)) {
         util.showToast('请输入正确的手机号', 'none')
         return
       }
       
-      if (!password.trim()) {
+      if (!passwordTrim) {
         util.showToast('请输入密码', 'none')
         return
       }
       
-      if (password.trim().length < 6) {
+      if (passwordTrim.length < 6) {
         util.showToast('密码至少6位', 'none')
         return
       }
     } else {
-      if (!phone.trim()) {
+      if (!phoneTrim) {
         util.showToast('请输入手机号', 'none')
         return
       }
       
-      if (!/^1[3-9]\d{9}$/.test(phone.trim())) {
+      if (!/^1[3-9]\d{9}$/.test(phoneTrim)) {
         util.showToast('请输入正确的手机号', 'none')
         return
       }
@@ -167,22 +192,22 @@ Page({
         return
       }
       
-      if (!password.trim()) {
+      if (!passwordTrim) {
         util.showToast('请输入密码', 'none')
         return
       }
       
-      if (password.trim().length < 6) {
+      if (passwordTrim.length < 6) {
         util.showToast('密码至少6位', 'none')
         return
       }
       
-      if (password !== confirmPassword) {
+      if (this.data.password !== this.data.confirmPassword) {
         util.showToast('两次密码不一致', 'none')
         return
       }
       
-      if (!agreeTerms) {
+      if (!this.data.agreeTerms) {
         util.showToast('请先同意用户协议', 'none')
         return
       }
@@ -192,34 +217,87 @@ Page({
     util.showLoading(mode === 'login' ? '登录中...' : '注册中...')
     
     setTimeout(() => {
-      const userInfo = {
-        id: 'user_' + Date.now().toString().slice(-6),
-        avatar: '/assets/images/avatar1.jpg',
-        nickname: this.data.nickname || '用户' + phone.slice(-4),
-        username: 'user_' + phone.slice(-4),
-        fansCount: 0,
-        followCount: 0,
-        likesCount: 0,
-        bio: '',
-        region: '',
-        age: 0,
-        gender: 0,
-        phone: phone
+      if (mode === 'login') {
+        const existingUser = this.findUserByPhone(phoneTrim)
+        
+        if (!existingUser) {
+          util.hideLoading()
+          util.showToast('该手机号未注册，请先注册', 'none')
+          this.setData({ submitting: false })
+          return
+        }
+        
+        if (existingUser.password !== passwordTrim) {
+          util.hideLoading()
+          util.showToast('密码错误', 'none')
+          this.setData({ submitting: false })
+          return
+        }
+        
+        const userInfo = {
+          id: existingUser.id,
+          avatar: existingUser.avatar || '/assets/images/avatar1.jpg',
+          nickname: existingUser.nickname,
+          username: existingUser.username,
+          fansCount: existingUser.fansCount || 0,
+          followCount: existingUser.followCount || 0,
+          likesCount: existingUser.likesCount || 0,
+          bio: existingUser.bio || '',
+          region: existingUser.region || '',
+          age: existingUser.age || 0,
+          gender: existingUser.gender || 0,
+          phone: phoneTrim
+        }
+        
+        const token = 'token_' + Date.now()
+        app.login(userInfo, token)
+        
+        util.hideLoading()
+        util.showToast('登录成功', 'success')
+        this.setData({ submitting: false })
+        
+        setTimeout(() => {
+          wx.navigateBack()
+        }, 1000)
+      } else {
+        const existingUser = this.findUserByPhone(phoneTrim)
+        
+        if (existingUser) {
+          util.hideLoading()
+          util.showToast('该手机号已注册，请直接登录', 'none')
+          this.setData({ submitting: false })
+          return
+        }
+        
+        const userInfo = {
+          id: 'user_' + Date.now().toString().slice(-6),
+          avatar: '/assets/images/avatar1.jpg',
+          nickname: this.data.nickname.trim() || '用户' + phoneTrim.slice(-4),
+          username: 'user_' + phoneTrim.slice(-4),
+          fansCount: 0,
+          followCount: 0,
+          likesCount: 0,
+          bio: '',
+          region: '',
+          age: 0,
+          gender: 0,
+          phone: phoneTrim
+        }
+        
+        this.saveRegisteredUser(userInfo)
+        
+        const token = 'token_' + Date.now()
+        app.login(userInfo, token)
+        
+        util.hideLoading()
+        util.showToast('注册成功', 'success')
+        this.setData({ submitting: false })
+        
+        setTimeout(() => {
+          wx.navigateBack()
+        }, 1000)
       }
-      
-      const token = 'token_' + Date.now()
-      
-      app.login(userInfo, token)
-      
-      util.hideLoading()
-      util.showToast(mode === 'login' ? '登录成功' : '注册成功', 'success')
-      
-      this.setData({ submitting: false })
-      
-      setTimeout(() => {
-        wx.navigateBack()
-      }, 1000)
-    }, 1500)
+    }, 800)
   },
 
   wxLogin: function () {
